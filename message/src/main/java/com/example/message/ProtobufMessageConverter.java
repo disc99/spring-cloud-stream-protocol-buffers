@@ -1,0 +1,44 @@
+package com.example.message;
+
+import com.google.protobuf.AbstractMessageLite;
+import org.springframework.core.MethodParameter;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageHeaders;
+import org.springframework.messaging.converter.AbstractMessageConverter;
+import org.springframework.util.MimeType;
+
+import java.lang.reflect.Method;
+
+public class ProtobufMessageConverter extends AbstractMessageConverter {
+
+	public ProtobufMessageConverter() {
+		super(new MimeType("application", "x-protobuf"));
+	}
+
+	@Override
+	protected boolean supports(Class<?> clazz) {
+		return AbstractMessageLite.class.isAssignableFrom(clazz);
+	}
+
+	@Override
+	protected Object convertToInternal(Object payload, MessageHeaders headers, Object conversionHint) {
+		return ((AbstractMessageLite) payload).toByteArray();
+	}
+
+	@Override
+	@lombok.SneakyThrows
+	protected Object convertFromInternal(Message<?> message, Class<?> targetClass, Object conversionHint) {
+		Object payload = message.getPayload();
+		if (conversionHint instanceof MethodParameter) {
+			MethodParameter param = (MethodParameter) conversionHint;
+			param = param.nestedIfOptional();
+			if (Message.class.isAssignableFrom(param.getParameterType())) {
+				param = param.nested();
+			}
+			Class<?> clazz = param.getNestedParameterType();
+			Method parseFrom = clazz.getMethod("parseFrom", byte[].class);
+			return parseFrom.invoke(null, payload);
+		}
+		return payload;
+	}
+}

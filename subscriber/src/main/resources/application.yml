@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: events
+          content-type: application/x-protobuf

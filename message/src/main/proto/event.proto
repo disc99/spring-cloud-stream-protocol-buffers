@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.event";
+
+message TaskCreated {
+    string id = 1;
+    string name = 2;
+}
+
+message TaskStarted {
+    string id = 1;
+}
+
+message TaskDone {
+    string id = 1;
+}

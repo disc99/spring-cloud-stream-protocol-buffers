@@ -1,0 +1,79 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.2.RELEASE'
+		springCloudVersion = 'Finchley.BUILD-SNAPSHOT'
+		protobufVersion = '0.8.3'
+		grpcVersion = '1.8.0'
+		springBootGrpcVersion = '2.3.2'
+	}
+	repositories {
+		mavenCentral()
+		maven { url "https://plugins.gradle.org/m2/" }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath "com.google.protobuf:protobuf-gradle-plugin:0.8.3"
+
+	}
+}
+
+
+allprojects {
+	repositories {
+		mavenCentral()
+		jcenter()
+	}
+}
+
+
+
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'idea'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+	apply plugin: 'com.google.protobuf'
+
+	group = 'com-example'
+	version = '1.0.0'
+
+	dependencies {
+		compile 'com.google.protobuf:protobuf-java:3.5.1'
+
+		compile 'org.springframework.cloud:spring-cloud-stream'
+		compile 'org.springframework.cloud:spring-cloud-starter-stream-kafka'
+
+		compileOnly('org.projectlombok:lombok')
+	}
+
+	dependencyManagement {
+		imports {
+			mavenBom 'org.springframework.cloud:spring-cloud-stream-dependencies:Elmhurst.RELEASE'
+		}
+	}
+
+	sourceSets {
+		main {
+			java {
+				srcDirs 'build/generated/source/proto/main/grpc'
+				srcDirs 'build/generated/source/proto/main/java'
+			}
+		}
+	}
+}
+
+project(':message') {
+}
+
+project(':publisher') {
+	dependencies {
+		compile project(':message')
+	}
+}
+
+project(':subscriber') {
+	dependencies {
+		compile project(':message')
+	}
+}
+

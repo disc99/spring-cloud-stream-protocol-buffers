@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    stream:
+      bindings:
+        output:
+          destination: events
+          content-type: application/x-protobuf
+          producer:
+            partitionKeyExpression: "1"
