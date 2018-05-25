@@ -13,15 +13,12 @@ buildscript {
 	}
 }
 
-
 allprojects {
 	repositories {
 		mavenCentral()
 		jcenter()
 	}
 }
-
-
 
 subprojects {
 	apply plugin: 'java'
@@ -35,18 +32,17 @@ subprojects {
 
 	dependencies {
 		compile 'com.google.protobuf:protobuf-java:3.5.1'
-
 		compile 'org.springframework.cloud:spring-cloud-stream'
 		compile 'org.springframework.cloud:spring-cloud-starter-stream-kafka'
-
 		compileOnly('org.projectlombok:lombok')
+		runtime('org.springframework.boot:spring-boot-devtools')
 	}
 
-	dependencyManagement {
-		imports {
-			mavenBom 'org.springframework.cloud:spring-cloud-stream-dependencies:Elmhurst.RELEASE'
-		}
-	}
+    dependencyManagement {
+        imports {
+            mavenBom 'org.springframework.cloud:spring-cloud-stream-dependencies:Elmhurst.RELEASE'
+        }
+    }
 
 	sourceSets {
 		main {
@@ -58,8 +54,7 @@ subprojects {
 	}
 }
 
-project(':message') {
-}
+project(':message') {}
 
 project(':publisher') {
 	dependencies {

@@ -1,8 +1,8 @@
 package com.example.publisher;
 
-import com.example.event.TaskCreated;
-import com.example.event.TaskDone;
-import com.example.event.TaskStarted;
+import com.example.task.TaskCreated;
+import com.example.task.TaskDone;
+import com.example.task.TaskStarted;
 import com.example.message.ProtobufMessageConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.SpringApplication;

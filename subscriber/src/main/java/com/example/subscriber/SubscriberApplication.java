@@ -1,8 +1,8 @@
 package com.example.subscriber;
 
-import com.example.event.TaskCreated;
-import com.example.event.TaskDone;
-import com.example.event.TaskStarted;
+import com.example.task.TaskCreated;
+import com.example.task.TaskDone;
+import com.example.task.TaskStarted;
 import com.example.message.ProtobufMessageConverter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,7 +11,6 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.annotation.StreamMessageConverter;
 import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.context.annotation.Bean;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.converter.MessageConverter;
 
 @SpringBootApplication
