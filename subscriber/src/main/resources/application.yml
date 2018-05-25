@@ -3,5 +3,5 @@ spring:
     stream:
       bindings:
         input:
-          destination: events
+          destination: tasks
           content-type: application/x-protobuf
